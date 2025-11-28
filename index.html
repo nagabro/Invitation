@@ -1,133 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiring Manager Pro (Search Edition)</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiring Manager Pro — Improved</title>
     <style>
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; padding-bottom: 80px; }
-        
-        /* --- DASHBOARD STATS --- */
-        .dashboard {
-            display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; scrollbar-width: none;
+        :root{
+            --bg:#f4f7f6; --muted:#777; --card:#fff; --accent:#007bff; --radius:12px;
         }
-        .stat-card {
-            background: white; padding: 10px; border-radius: 10px; min-width: 70px;
-            text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); flex: 1;
-        }
-        .stat-num { font-weight: 800; font-size: 18px; }
-        .stat-label { font-size: 9px; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;}
+        html,body{height:100%;}
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); padding:16px; margin:0; }
 
-        /* --- SEARCH BAR (NEW) --- */
-        .search-container { margin-bottom: 15px; position: relative; }
-        .search-input {
-            width: 100%; padding: 12px 12px 12px 40px; border-radius: 25px; border: 1px solid #ddd;
-            font-size: 16px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box;
-        }
-        .search-icon {
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888;
-        }
+        /* Dashboard */
+        .dashboard{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:6px}
+        .stat-card{background:var(--card);padding:10px;border-radius:10px;min-width:80px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.04);flex:1}
+        .stat-num{font-weight:800;font-size:18px}
+        .stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
 
-        /* --- ADD NEW SECTION --- */
-        .add-box {
-            background: white; padding: 15px; border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px;
-            border: 1px solid #e1e4e8;
-        }
-        .section-title { font-weight: 700; color: #333; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 5px;}
-        
-        .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        
-        input, select {
-            padding: 12px; border: 1px solid #e1e4e8; border-radius: 8px;
-            font-size: 14px; width: 100%; box-sizing: border-box; background: #f9f9f9;
-            outline: none; transition: border 0.2s;
-        }
-        input:focus, select:focus { border-color: #007bff; background: white; }
+        /* Search */
+        .search-container{margin-bottom:14px;position:relative}
+        .search-input{width:100%;padding:12px 12px 12px 42px;border-radius:28px;border:1px solid #e1e4e8;font-size:16px;box-sizing:border-box}
+        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888}
 
-        .add-btn {
-            background-color: #000; color: white; border: none;
-            width: 100%; padding: 14px; border-radius: 8px; font-weight: 600; font-size: 16px;
-            cursor: pointer; transition: transform 0.1s;
-        }
-        .add-btn:active { transform: scale(0.98); }
+        /* Add box */
+        .add-box{background:var(--card);padding:14px;border-radius:var(--radius);box-shadow:0 6px 16px rgba(0,0,0,0.04);margin-bottom:18px;border:1px solid #e9eef0}
+        .section-title{font-weight:700;color:#222;margin-bottom:10px;font-size:15px;display:flex;align-items:center;gap:8px}
+        .input-row{display:flex;gap:8px;margin-bottom:10px}
+        input,select,button{font-size:14px}
+        input,select{padding:10px;border:1px solid #e1e4e8;border-radius:8px;background:#fbfbfc;outline:none}
+        input:focus,select:focus{border-color:var(--accent);background:white}
+        .add-btn{background:#000;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;cursor:pointer}
 
-        /* --- LIST CARD DESIGN --- */
-        .card {
-            background: white; border-radius: 12px; padding: 15px;
-            margin-bottom: 12px; display: flex; flex-direction: column;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            border-left: 6px solid #e0e0e0;
-            position: relative;
-            transition: all 0.3s ease;
-        }
+        /* Candidate card */
+        .card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;display:flex;flex-direction:column;box-shadow:0 2px 6px rgba(0,0,0,0.03);border-left:6px solid #e0e0e0}
+        .card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+        .name{font-weight:700;font-size:17px;color:#111}
+        .phone{font-family:monospace;color:#555;margin-top:6px}
+        .note-area{margin-top:8px;display:flex;align-items:center;gap:8px}
+        .extra-note{font-size:12px;color:#444;background:#f1f1f1;padding:3px 8px;border-radius:6px}
+        .edit-icon{cursor:pointer;font-size:13px;padding:4px 8px;border-radius:6px;border:1px solid #ddd;background:white}
 
-        /* --- STATUS COLORS --- */
-        .st-interested { border-left-color: #28a745; background: #f0fff4; }
-        .st-office { border-left-color: #6f42c1; background: #f3e5f5; }
-        .st-training { border-left-color: #17a2b8; background: #e0f7fa; }
-        .st-working { border-left-color: #007bff; background: #e3f2fd; }
-        .st-busy { border-left-color: #6c757d; background: #f8f9fa; }
-        .st-no-answer { border-left-color: #ffc107; background: #fffdf5; }
-        .st-not-interested { border-left-color: #dc3545; opacity: 0.7; }
+        .tag-container{display:flex;gap:6px;align-items:center}
+        .branch-tag{font-size:11px;padding:4px 8px;border-radius:6px;font-weight:700;color:#444;border:1px solid #e5e7ea;background:#fafafb}
+        .badge{font-size:11px;padding:5px 8px;border-radius:12px;font-weight:800;color:#fff;text-transform:uppercase}
+        .bg-zomato{background:#cb202d}
+        .bg-swiggy{background:#fc8019}
+        .bg-shadowfax{background:#00cba9;color:#023}
+        .bg-instamart{background:#ff5200}
+        .bg-zepto{background:#4b0082}
+        .bg-rapido{background:#f9d310;color:#111}
+        .bg-blinkit{background:#f8cb00;color:#111}
+        .bg-porter{background:#2962ff}
+        .bg-uber{background:#000}
+        .bg-da{background:#1565c099;color:#fff}
 
-        /* Card Header */
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .name-group { display: flex; flex-direction: column; width: 100%; }
-        
-        .top-line { display: flex; justify-content: space-between; width: 100%; align-items: center; }
-        .name { font-weight: 700; font-size: 17px; color: #222; }
-        .phone { font-size: 14px; color: #666; font-family: monospace; letter-spacing: 0.5px; margin-top: 2px; }
-        
-        /* Note Styling */
-        .note-area { margin-top: 6px; display: flex; align-items: center; gap: 5px; }
-        .extra-note { font-size: 12px; color: #555; background: #eee; padding: 2px 8px; border-radius: 4px; display: inline-block; }
-        .edit-icon { cursor: pointer; font-size: 14px; text-decoration: none; border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px; color: #007bff; background: white;}
+        .action-row{display:flex;gap:10px;margin-top:12px;align-items:center}
+        .status-select{flex-grow:1;padding:8px;border-radius:8px;border:1px solid #ddd;height:42px}
+        .call-btn{background:#28a745;color:#fff;width:52px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px}
 
-        /* Delete Button */
-        .delete-btn {
-            background: none; border: none; color: #dc3545; font-size: 16px; cursor: pointer; padding: 5px; margin-left: 5px;
-        }
+        .controls{display:flex;gap:8px;margin-top:8px}
+        .download-btn{background:#343a40;color:white;border:none;padding:12px;border-radius:30px;font-weight:700;cursor:pointer}
+        .small-btn{padding:8px 10px;border-radius:8px;border:1px solid #e3e6e8;background:white;cursor:pointer}
 
-        /* Tags and Badges */
-        .tag-container { display: flex; gap: 5px; align-items: center; }
-        
-        .branch-tag {
-            font-size: 10px; padding: 3px 6px; border-radius: 4px; 
-            font-weight: 700; color: #555; border: 1px solid #ccc;
-            background-color: #f8f9fa; letter-spacing: 0.5px;
-        }
+        /* Status styles */
+        .st-interested{border-left-color:#28a745;background:#f0fff4}
+        .st-office{border-left-color:#6f42c1;background:#f3e5f5}
+        .st-training{border-left-color:#17a2b8;background:#e0f7fa}
+        .st-working{border-left-color:#007bff;background:#e3f2fd}
+        .st-busy{border-left-color:#6c757d;background:#f8f9fa}
+        .st-no-answer{border-left-color:#ffc107;background:#fffdf5}
+        .st-not-interested{border-left-color:#dc3545;opacity:0.8}
 
-        .badge { font-size: 10px; padding: 4px 8px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: white;}
-        
-        .bg-zomato { background: #cb202d; }
-        .bg-swiggy { background: #fc8019; }
-        .bg-shadowfax { background: #00cba9; }
-        .bg-instamart { background: #ff5200; }
-        .bg-zepto { background: #4b0082; }
-        .bg-rapido { background: #f9d310; color: black; }
-        .bg-blinkit { background: #f8cb00; color: black; }
-        .bg-porter { background: #2962ff; }
-        .bg-uber { background: #000; }
-        .bg-da { background: #e3f2fd; color: #1565c0; }
-
-        /* Actions */
-        .action-row { display: flex; gap: 10px; margin-top: 10px; }
-        .status-select { flex-grow: 1; padding: 8px; font-size: 13px; height: 40px; border-radius: 6px; border: 1px solid #ccc; background: white;}
-        
-        .call-btn {
-            background-color: #28a745; color: white;
-            width: 50px; height: 40px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; font-size: 20px; box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
-        }
-        
-        .download-btn {
-            background-color: #343a40; color: white; border: none;
-            width: 100%; padding: 12px; border-radius: 30px;
-            font-weight: 600; margin-top: 20px; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+        /* Responsive */
+        @media (max-width:640px){.input-row{flex-direction:column}.tag-container{flex-wrap:wrap}}
 
     </style>
 </head>
@@ -136,59 +81,79 @@
     <div class="dashboard">
         <div class="stat-card"><div class="stat-num" id="c-total">0</div><div class="stat-label">Total</div></div>
         <div class="stat-card" style="color:#6f42c1"><div class="stat-num" id="c-office">0</div><div class="stat-label">Office</div></div>
-        <div class="stat-card" style="color:#28a745"><div class="stat-num" id="c-interested">0</div><div class="stat-label">Intrest</div></div>
+        <div class="stat-card" style="color:#28a745"><div class="stat-num" id="c-interested">0</div><div class="stat-label">Interest</div></div>
         <div class="stat-card" style="color:#17a2b8"><div class="stat-num" id="c-training">0</div><div class="stat-label">Training</div></div>
         <div class="stat-card" style="color:#ffc107"><div class="stat-num" id="c-na">0</div><div class="stat-label">No Ans</div></div>
     </div>
 
-    <div class="search-container">
+    <div class="search-container" role="search">
         <div class="search-icon">🔍</div>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search Name, Phone, Branch, or Status..." onkeyup="render()">
+        <input aria-label="Search candidates" type="search" id="searchInput" class="search-input" placeholder="Search Name, Phone, Branch, or Status..." />
     </div>
 
-    <div class="add-box">
-        <div class="section-title">➕ Add New Candidate</div>
-        
+    <div class="add-box" aria-labelledby="addTitle">
+        <div class="section-title" id="addTitle">➕ Add New Candidate</div>
+
         <div class="input-row">
-            <input type="text" id="newName" placeholder="Name" style="flex: 2;">
-            <input type="tel" id="newPhone" placeholder="Phone" style="flex: 3;">
+            <input type="text" id="newName" placeholder="Name" style="flex:2" autocomplete="name" />
+            <input type="tel" id="newPhone" placeholder="Phone (10 digits)" style="flex:3" inputmode="tel" pattern="[0-9]{10}" />
         </div>
-        
+
         <div class="input-row">
-            <select id="newCompany" style="flex:2;">
-                <option value="Zomato">Zomato</option>
-                <option value="Swiggy">Swiggy</option>
-                <option value="Shadowfax">Shadowfax</option>
-                <option value="Instamart">Instamart</option>
-                <option value="Zepto">Zepto</option>
-                <option value="Blinkit">Blinkit</option>
-                <option value="Rapido">Rapido</option>
-                <option value="Uber">Uber</option>
-                <option value="DA">DA (General)</option>
+            <select id="newCompany" style="flex:2">
+                <option>Zomato</option>
+                <option>Swiggy</option>
+                <option>Shadowfax</option>
+                <option>Instamart</option>
+                <option>Zepto</option>
+                <option>Blinkit</option>
+                <option>Rapido</option>
+                <option>Uber</option>
+                <option>DA</option>
             </select>
-            
-            <select id="newBranch" style="flex:1; font-weight:bold; color:#555;">
-                <option value="NLRD">NLRD</option>
-                <option value="XAPE">XAPE</option>
-                <option value="NLRM">NLRM</option>
-                <option value="NLRA">NLRA</option>
-                <option value="NLRG">NLRG</option>
+            <select id="newBranch" style="flex:1; font-weight:bold; color:#555">
+                <option>NLRD</option>
+                <option>XAPE</option>
+                <option>NLRM</option>
+                <option>NLRA</option>
+                <option>NLRG</option>
             </select>
         </div>
 
         <div class="input-row">
-            <input type="text" id="newNote" placeholder="Extra Note (e.g. Has Bike)">
+            <input type="text" id="newNote" placeholder="Extra Note (e.g. Has Bike)" />
         </div>
-        <button onclick="addCandidate()" class="add-btn">Add to List</button>
+
+        <div style="display:flex;gap:8px">
+            <button id="addBtn" class="add-btn">Add to List</button>
+            <button id="clearBtn" class="small-btn" title="Clear form">Clear</button>
+        </div>
     </div>
 
-    <div id="candidate-list"></div>
+    <div id="candidate-list" aria-live="polite"></div>
 
-    <button onclick="downloadVCF()" class="download-btn">📥 Download All Contacts</button>
+    <div class="controls">
+        <button id="downloadVcf" class="download-btn">📥 Download All Contacts (VCF)</button>
+        <button id="downloadCsv" class="small-btn">⬇️ Export CSV</button>
+        <button id="clearAll" class="small-btn">🧹 Clear All (local)</button>
+    </div>
 
 <script>
-    // --- DATA ---
-    let candidates = [
+    // ---------- Utilities ----------
+    const qs = s => document.querySelector(s);
+    const qsa = s => Array.from(document.querySelectorAll(s));
+
+    // Debounce helper
+    function debounce(fn, wait=250){
+        let t;
+        return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn.apply(this,args), wait); };
+    }
+
+    // Local storage key
+    const STORAGE_KEY = 'hiring_manager_v1';
+
+    // ---------- Initial Data (keeps existing sample list) ----------
+    const sample = [
         { name: "Kalyan", phone: "9493061306", company: "DA", branch: "NLRD", note: "Training 21/11", status: "pending" },
         { name: "Rajesh", phone: "8639176007", company: "DA", branch: "XAPE", note: "Training 21/11", status: "pending" },
         { name: "Rahaman", phone: "9573148671", company: "DA", branch: "NLRD", note: "", status: "pending" },
@@ -202,162 +167,178 @@
         { name: "Hemant", phone: "7981029462", company: "Zomato", branch: "NLRD", note: "Full Time", status: "pending" }
     ];
 
-    const listContainer = document.getElementById('candidate-list');
+    // Load from storage or use sample
+    let candidates = load() || sample.slice();
 
-    // --- RENDER FUNCTION ---
-    function render() {
-        listContainer.innerHTML = "";
-        
-        // Search Filter Logic
-        const searchText = document.getElementById('searchInput').value.toLowerCase();
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(candidates)); }
+    function load(){ try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null; }catch(e){return null} }
 
-        candidates.forEach((c, index) => {
-            // Check if matches search
-            const searchString = `${c.name} ${c.phone} ${c.branch} ${c.company} ${c.status}`.toLowerCase();
-            if(!searchString.includes(searchText)) return; // Skip if doesn't match
+    // ---------- Render ----------
+    const listContainer = qs('#candidate-list');
 
-            // Badge Color Logic
-            let badgeClass = "bg-da";
-            const co = c.company.toLowerCase();
-            if(co.includes("zomato")) badgeClass = "bg-zomato";
-            if(co.includes("swiggy")) badgeClass = "bg-swiggy";
-            if(co.includes("shadow")) badgeClass = "bg-shadowfax";
-            if(co.includes("insta")) badgeClass = "bg-instamart";
-            if(co.includes("zepto")) badgeClass = "bg-zepto";
-            if(co.includes("rapido")) badgeClass = "bg-rapido";
-            if(co.includes("blinkit")) badgeClass = "bg-blinkit";
-            if(co.includes("uber")) badgeClass = "bg-uber";
-            if(co.includes("porter")) badgeClass = "bg-porter";
+    function getBadgeClass(company){
+        const co = (company||'').toLowerCase();
+        if(co.includes('zomato')) return 'bg-zomato';
+        if(co.includes('swiggy')) return 'bg-swiggy';
+        if(co.includes('shadow')) return 'bg-shadowfax';
+        if(co.includes('insta')) return 'bg-instamart';
+        if(co.includes('zepto')) return 'bg-zepto';
+        if(co.includes('rapido')) return 'bg-rapido';
+        if(co.includes('blinkit')) return 'bg-blinkit';
+        if(co.includes('uber')) return 'bg-uber';
+        if(co.includes('porter')) return 'bg-porter';
+        return 'bg-da';
+    }
 
-            // Status Color Logic
-            let statusClass = "";
-            if(c.status === "Interested") statusClass = "st-interested";
-            if(c.status === "Not Interested") statusClass = "st-not-interested";
-            if(c.status === "Not Answering") statusClass = "st-no-answer";
-            if(c.status === "Office Coming") statusClass = "st-office";
-            if(c.status === "Training") statusClass = "st-training";
-            if(c.status === "Working") statusClass = "st-working";
-            if(c.status === "Busy") statusClass = "st-busy";
+    function render(){
+        listContainer.innerHTML = '';
+        const q = (qs('#searchInput').value||'').trim().toLowerCase();
 
-            const noteText = c.note ? c.note : "Note";
-            const noteStyle = c.note ? "extra-note" : "edit-icon"; 
+        candidates.forEach((c, idx)=>{
+            const hay = `${c.name} ${c.phone} ${c.branch} ${c.company} ${c.status} ${c.note}`.toLowerCase();
+            if(q && !hay.includes(q)) return; // filter
 
-            const html = `
-                <div class="card ${statusClass}">
-                    <div class="card-header">
-                        <div class="name-group">
-                            <div class="top-line">
-                                <span class="name">${c.name}</span>
-                                <div class="tag-container">
-                                    <span class="branch-tag">${c.branch}</span>
-                                    <span class="badge ${badgeClass}">${c.company}</span>
-                                    <button class="delete-btn" onclick="removeCandidate(${index})">🗑️</button>
-                                </div>
+            const badgeClass = getBadgeClass(c.company);
+            const statusClass = {
+                'Interested':'st-interested', 'Not Interested':'st-not-interested', 'Not Answering':'st-no-answer',
+                'Office Coming':'st-office','Training':'st-training','Working':'st-working','Busy':'st-busy'
+            }[c.status] || '';
+
+            const noteText = c.note ? c.note : 'Add note';
+            const noteStyle = c.note ? 'extra-note' : 'edit-icon';
+
+            const el = document.createElement('div');
+            el.className = 'card ' + statusClass;
+            el.innerHTML = `
+                <div class="card-header">
+                    <div style="width:100%">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div class="name">${escapeHTML(c.name)}</div>
+                                <div class="phone">${escapeHTML(c.phone)}</div>
                             </div>
-                            <div class="phone">${c.phone}</div>
-                            
-                            <div class="note-area">
-                                <span class="${noteStyle}">${noteText}</span>
-                                <span class="edit-icon" onclick="editNote(${index})">✏️</span>
+                            <div class="tag-container">
+                                <span class="branch-tag">${escapeHTML(c.branch)}</span>
+                                <span class="badge ${badgeClass}">${escapeHTML(c.company)}</span>
+                                <button class="small-delete small-btn" data-idx="${idx}" title="Delete">🗑️</button>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="action-row">
-                        <select class="status-select" onchange="updateStatus(${index}, this.value)">
-                            <option value="pending" ${c.status === 'pending' ? 'selected' : ''}>Status...</option>
-                            <option value="Interested" ${c.status === 'Interested' ? 'selected' : ''}>✅ Interested</option>
-                            <option value="Office Coming" ${c.status === 'Office Coming' ? 'selected' : ''}>🏢 Office Coming</option>
-                            <option value="Training" ${c.status === 'Training' ? 'selected' : ''}>🎓 Training</option>
-                            <option value="Working" ${c.status === 'Working' ? 'selected' : ''}>💼 Working</option>
-                            <option value="Busy" ${c.status === 'Busy' ? 'selected' : ''}>⏳ Busy</option>
-                            <option value="Not Answering" ${c.status === 'Not Answering' ? 'selected' : ''}>⚠️ Not Answering</option>
-                            <option value="Not Interested" ${c.status === 'Not Interested' ? 'selected' : ''}>❌ Not Interested</option>
-                        </select>
-                        <a href="tel:${c.phone}" class="call-btn">📞</a>
+                        <div class="note-area">
+                            <span class="${noteStyle}">${escapeHTML(noteText)}</span>
+                            <button class="edit-icon" data-edit="${idx}">✏️</button>
+                        </div>
                     </div>
                 </div>
+
+                <div class="action-row">
+                    <select class="status-select" data-idx="${idx}">
+                        <option value="pending">Status...</option>
+                        <option value="Interested">✅ Interested</option>
+                        <option value="Office Coming">🏢 Office Coming</option>
+                        <option value="Training">🎓 Training</option>
+                        <option value="Working">💼 Working</option>
+                        <option value="Busy">⏳ Busy</option>
+                        <option value="Not Answering">⚠️ Not Answering</option>
+                        <option value="Not Interested">❌ Not Interested</option>
+                    </select>
+                    <a href="tel:${encodeURIComponent(c.phone)}" class="call-btn" aria-label="Call ${escapeHTML(c.name)}">📞</a>
+                </div>
             `;
-            listContainer.innerHTML += html;
+
+            listContainer.appendChild(el);
+            // Set the select value after insertion
+            const sel = el.querySelector('.status-select');
+            if(sel) sel.value = c.status || 'pending';
         });
+
+        // attach delegated listeners (faster than many listeners)
+        attachDelegatedListeners();
         updateDashboard();
+        save();
     }
 
-    // --- LOGIC FUNCTIONS ---
+    // Escape to prevent HTML injection when rendering names/notes
+    function escapeHTML(str){ return String(str||'').replace(/[&<>"]/g, s=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[s])); }
 
-    function addCandidate() {
-        const name = document.getElementById('newName').value;
-        const phone = document.getElementById('newPhone').value;
-        const company = document.getElementById('newCompany').value;
-        const branch = document.getElementById('newBranch').value;
-        const note = document.getElementById('newNote').value;
+    function attachDelegatedListeners(){
+        // Delete buttons
+        qsa('.small-delete').forEach(btn=>{
+            btn.onclick = ()=>{ const i = Number(btn.dataset.idx); if(confirm('Delete '+candidates[i].name+' ?')){ candidates.splice(i,1); render(); } };
+        });
+        // Edit note
+        qsa('[data-edit]').forEach(b=>{ b.onclick = ()=>{ const i = Number(b.getAttribute('data-edit')); const val = prompt('Edit note for '+candidates[i].name, candidates[i].note||''); if(val!==null){ candidates[i].note = val.trim(); render(); } }; });
+        // Status change
+        qsa('.status-select').forEach(s=>{ s.onchange = ()=>{ const i = Number(s.dataset.idx); candidates[i].status = s.value; render(); }; });
+    }
 
-        if(name && phone) {
-            candidates.unshift({ name, phone, company, branch, note, status: "pending" });
-            render();
-            document.getElementById('newName').value = "";
-            document.getElementById('newPhone').value = "";
-            document.getElementById('newNote').value = "";
-        } else {
-            alert("Please enter Name and Phone.");
+    function updateDashboard(){
+        qs('#c-total').innerText = candidates.length;
+        qs('#c-office').innerText = candidates.filter(c=>c.status==='Office Coming').length;
+        qs('#c-interested').innerText = candidates.filter(c=>c.status==='Interested').length;
+        qs('#c-training').innerText = candidates.filter(c=>c.status==='Training').length;
+        qs('#c-na').innerText = candidates.filter(c=>c.status==='Not Answering').length;
+    }
+
+    // ---------- Actions ----------
+    function addCandidate(){
+        const name = qs('#newName').value.trim();
+        const phone = (qs('#newPhone').value||'').replace(/\D/g,'').slice(0,10);
+        const company = qs('#newCompany').value;
+        const branch = qs('#newBranch').value;
+        const note = qs('#newNote').value.trim();
+
+        if(!name || phone.length < 10){ alert('Please provide a valid name and 10-digit phone.'); return; }
+
+        // prevent exact duplicate phone
+        if(candidates.some(c=>c.phone === phone)){
+            if(!confirm('Phone exists already. Add duplicate?')) return;
         }
-    }
 
-    function removeCandidate(index) {
-        if(confirm("Delete " + candidates[index].name + "?")) {
-            candidates.splice(index, 1);
-            render();
-        }
-    }
-
-    function editNote(index) {
-        let currentNote = candidates[index].note;
-        let newNote = prompt("Edit Note:", currentNote);
-        if (newNote !== null) {
-            candidates[index].note = newNote;
-            render();
-        }
-    }
-
-    function updateStatus(index, val) {
-        candidates[index].status = val;
+        candidates.unshift({ name, phone, company, branch, note, status: 'pending' });
+        qs('#newName').value=''; qs('#newPhone').value=''; qs('#newNote').value='';
         render();
     }
 
-    function updateDashboard() {
-        document.getElementById('c-total').innerText = candidates.length;
-        document.getElementById('c-office').innerText = candidates.filter(c => c.status === "Office Coming").length;
-        document.getElementById('c-interested').innerText = candidates.filter(c => c.status === "Interested").length;
-        document.getElementById('c-training').innerText = candidates.filter(c => c.status === "Training").length;
-        document.getElementById('c-na').innerText = candidates.filter(c => c.status === "Not Answering").length;
-    }
-
-    function downloadVCF() {
-        let vcardData = "";
-        candidates.forEach(c => {
-            const noteText = c.note ? ` (${c.note})` : "";
+    function downloadVCF(){
+        let vcardData='';
+        candidates.forEach(c=>{
+            const noteText = c.note ? ` (${c.note})` : '';
             const fullName = `${c.name} - ${c.company} (${c.branch})`;
-            
-            vcardData += "BEGIN:VCARD\nVERSION:3.0\n";
+            vcardData += 'BEGIN:VCARD\nVERSION:3.0\n';
             vcardData += `FN:${fullName}\n`;
             vcardData += `TEL;TYPE=CELL:${c.phone}\n`;
             vcardData += `NOTE:Status: ${c.status}${noteText}\n`;
-            vcardData += "END:VCARD\n";
+            vcardData += 'END:VCARD\n';
         });
-
-        const blob = new Blob([vcardData], { type: "text/vcard" });
+        const blob = new Blob([vcardData], { type: 'text/vcard' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "Branch_Hiring_List.vcf";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const a = document.createElement('a'); a.href = url; a.download = 'Branch_Hiring_List.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     }
 
+    function exportCSV(){
+        const rows = [['Name','Phone','Company','Branch','Status','Note']];
+        candidates.forEach(c=> rows.push([c.name,c.phone,c.company,c.branch,c.status,c.note]));
+        const csv = rows.map(r => r.map(cell=> '"'+String(cell||'').replace(/"/g,'""')+'"').join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'candidates.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    function clearAllLocal(){ if(confirm('Remove all candidates from local storage and reset to sample?')){ localStorage.removeItem(STORAGE_KEY); candidates = sample.slice(); render(); } }
+
+    // ---------- Events ----------
+    qs('#addBtn').onclick = addCandidate;
+    qs('#downloadVcf').onclick = downloadVCF;
+    qs('#downloadCsv').onclick = exportCSV;
+    qs('#clearAll').onclick = clearAllLocal;
+    qs('#clearBtn').onclick = ()=>{ qs('#newName').value=''; qs('#newPhone').value=''; qs('#newNote').value=''; };
+
+    qs('#searchInput').addEventListener('input', debounce(render, 200));
+
+    // Initial render
     render();
 
 </script>
-
 </body>
 </html>
